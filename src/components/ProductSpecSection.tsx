@@ -2,18 +2,21 @@ import React from 'react';
 import { ASSETS } from '../assets/images';
 import { PRODUCT_SPEC } from '../data/productData';
 import { Sparkles, ShieldCheck, Droplets, CheckCircle2 } from 'lucide-react';
+import { useInView } from '../lib/useInView';
 
 export const ProductSpecSection: React.FC = () => {
+  const { ref, isInView } = useInView({ threshold: 0.15 });
+
   return (
     <section id="specs" className="relative py-28 md:py-40 bg-[#0b0704] text-[#f4ede4] border-t border-[#1f1711] overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-radial-hero pointer-events-none opacity-40 blur-2xl" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column (Headline + Subheading + Description + Feature Bullets) */}
-          <div className="lg:col-span-7 flex flex-col space-y-6">
+          <div className={`lg:col-span-7 flex flex-col space-y-6 reveal-fade-up ${isInView ? 'is-revealed' : ''}`}>
             
             {/* Technical Subheading Line */}
             <div className="flex items-center space-x-3 text-xs md:text-sm font-tech text-[#ff8a1e] tracking-widest uppercase">
@@ -67,7 +70,7 @@ export const ProductSpecSection: React.FC = () => {
           </div>
 
           {/* Right Column (Rotated Product Shot + Floating Numeric Callout) */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          <div className={`lg:col-span-5 relative flex items-center justify-center reveal-fade-up delay-200 ${isInView ? 'is-revealed' : ''}`}>
             
             {/* Ambient Radial Spotlight */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#ff8a1e]/15 to-teal-500/10 rounded-full blur-3xl" />

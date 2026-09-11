@@ -2,19 +2,22 @@ import React from 'react';
 import { INGREDIENTS_LIST } from '../data/productData';
 import { ASSETS } from '../assets/images';
 import { Leaf, Shield, Award, Sparkles } from 'lucide-react';
+import { useInView } from '../lib/useInView';
 
 export const IngredientListSection: React.FC = () => {
+  const { ref, isInView } = useInView({ threshold: 0.15 });
+
   return (
     <section id="ingredients" className="relative py-28 md:py-36 bg-[#0b0704] text-[#f4ede4] border-t border-[#1f1711] overflow-hidden">
       {/* Soft ambient background glow */}
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-radial-pedestal pointer-events-none opacity-30" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Card-style ingredient rows with value pills */}
-          <div className="lg:col-span-6 flex flex-col space-y-4">
+          <div className={`lg:col-span-6 flex flex-col space-y-4 reveal-fade-up ${isInView ? 'is-revealed' : ''}`}>
             <div className="font-tech text-xs text-[#ff8a1e] tracking-widest uppercase mb-1 flex items-center space-x-2">
               <Leaf className="w-3.5 h-3.5" />
               <span>Bioactive Fruit Matrix // Lab Verified</span>
@@ -50,7 +53,7 @@ export const IngredientListSection: React.FC = () => {
           </div>
 
           {/* Right Column: Benefit Headline + Rotated Jar Visual */}
-          <div className="lg:col-span-6 flex flex-col justify-center space-y-8 lg:pl-6">
+          <div className={`lg:col-span-6 flex flex-col justify-center space-y-8 lg:pl-6 reveal-fade-up delay-200 ${isInView ? 'is-revealed' : ''}`}>
             
             <div className="space-y-4">
               <span className="font-tech text-xs text-[#ff8a1e] tracking-[0.2em] uppercase">

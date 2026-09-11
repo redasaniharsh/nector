@@ -1,18 +1,21 @@
 import React from 'react';
 import { FOOTER_STATS, BRAND_NAME, BRAND_TAGLINE } from '../data/productData';
 import { ASSETS } from '../assets/images';
+import { useInView } from '../lib/useInView';
 
 export const FooterStatsSection: React.FC = () => {
+  const { ref, isInView } = useInView({ threshold: 0.15 });
+
   return (
     <footer className="relative bg-[#080503] text-[#f4ede4] border-t border-[#1f1711] overflow-hidden pt-24 pb-16">
       
       {/* Background Soft Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-radial-pedestal opacity-20 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Top Summary & Visual */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <div className={`text-center max-w-2xl mx-auto mb-16 space-y-4 reveal-fade-up ${isInView ? 'is-revealed' : ''}`}>
           <span className="font-tech text-xs text-[#ff8a1e] tracking-[0.25em] uppercase">
             Pure Botanical Formulation
           </span>
@@ -35,7 +38,7 @@ export const FooterStatsSection: React.FC = () => {
         </div>
 
         {/* 4 Large Numeric Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-[#1e150f] text-center">
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-[#1e150f] text-center reveal-fade-up delay-150 ${isInView ? 'is-revealed' : ''}`}>
           {FOOTER_STATS.map((stat) => (
             <div key={stat.id} className="flex flex-col items-center space-y-1 group">
               <span className="font-display fluid-stat-num font-black tracking-tight text-[#ff8a1e] group-hover:scale-105 transition-transform duration-300">

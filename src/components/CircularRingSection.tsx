@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ASSETS } from '../assets/images';
 import { CIRCULAR_BADGES } from '../data/productData';
+import { useInView } from '../lib/useInView';
 
 export const CircularRingSection: React.FC = () => {
+  const { ref, isInView } = useInView({ threshold: 0.15 });
+
   // Trigonometric coordinates calculation
   // x = cx + r * cos(theta_rad)
   // y = cy + r * sin(theta_rad)
@@ -31,14 +34,14 @@ export const CircularRingSection: React.FC = () => {
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-radial-hero opacity-35 blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 md:px-12 text-center">
         
         {/* Section Header */}
-        <div className="mb-14 space-y-3">
+        <div className={`mb-14 space-y-3 reveal-fade-up ${isInView ? 'is-revealed' : ''}`}>
           <span className="font-tech text-xs text-[#ff8a1e] tracking-[0.25em] uppercase block">
             Botanical Architecture // 360° Formulation
           </span>
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#f4ede4]">
+          <h2 className="font-display fluid-section-headline font-black tracking-tight text-[#f4ede4]">
             Pure Fruit Synergy
           </h2>
           <p className="font-body text-[#9c8f80] text-sm md:text-base max-w-lg mx-auto">
@@ -47,7 +50,7 @@ export const CircularRingSection: React.FC = () => {
         </div>
 
         {/* Circular Ring Stage */}
-        <div className="relative w-full max-w-[680px] aspect-square mx-auto flex items-center justify-center">
+        <div className={`relative w-full max-w-[680px] aspect-square mx-auto flex items-center justify-center reveal-fade-up delay-150 ${isInView ? 'is-revealed' : ''}`}>
           
           {/* Subtle Rotating SVG Ring with Amber Gradient & Caustic Notch */}
           <svg
