@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroScrollStage } from './components/HeroScrollStage';
 import { ProductSpecSection } from './components/ProductSpecSection';
@@ -19,7 +19,19 @@ export default function App() {
   useLenis();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isExporterOpen, setIsExporterOpen] = useState(false);
-  const [isPreloaded, setIsPreloaded] = useState(false);
+  const [isPreloaded, setIsPreloaded] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return Boolean(
+        sessionStorage.getItem('nector_preloader_shown') ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+    return false;
+  });
+
+  const handlePreloaderComplete = useCallback(() => {
+    setIsPreloaded(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0b0704] text-[#f4ede4] relative selection:bg-[#ff8a1e] selection:text-[#0b0704]">
@@ -31,7 +43,7 @@ export default function App() {
       <CustomCursor />
 
       {/* 0. Cinematic Luxury Preloader ("From the Orchard") */}
-      <CinematicPreloader onComplete={() => setIsPreloaded(true)} />
+      <CinematicPreloader onComplete={handlePreloaderComplete} />
 
       {/* 1. Fixed Sticky Top Navigation */}
       <Navbar

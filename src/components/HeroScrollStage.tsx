@@ -40,6 +40,23 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const rafRef = useRef<number | null>(null);
 
+  // Fail-safe jar visibility: guaranteed to become true even if preloader handoff races or fails
+  const [internalReady, setInternalReady] = useState(isReady);
+
+  useEffect(() => {
+    if (isReady) {
+      setInternalReady(true);
+    }
+  }, [isReady]);
+
+  // Hard fallback: after 2.0 seconds, force the 3D jar to be visible under all circumstances
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      setInternalReady(true);
+    }, 2000);
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
   // Check user motion preferences
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -217,7 +234,7 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
         {/* Centerpiece REAL-TIME 3D WebGL Jar with Packed Fruit Gummies */}
         <div
           className={`absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isReady ? 'scale-100 opacity-100 drop-shadow-[0_20px_45px_rgba(255,138,30,0.22)]' : 'scale-90 opacity-0'
+            internalReady ? 'scale-100 opacity-100 drop-shadow-[0_20px_45px_rgba(255,138,30,0.22)]' : 'scale-90 opacity-0'
           }`}
         >
           <Suspense

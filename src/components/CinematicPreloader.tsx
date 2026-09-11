@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface CinematicPreloaderProps {
   onComplete: () => void;
@@ -6,14 +6,27 @@ interface CinematicPreloaderProps {
 
 export const CinematicPreloader: React.FC<CinematicPreloaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return Boolean(
+        sessionStorage.getItem('nector_preloader_shown') ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+    return false;
+  });
   const [isFading, setIsFading] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     // Check if previously viewed in this session
     if (typeof window !== 'undefined' && sessionStorage.getItem('nector_preloader_shown')) {
       setIsDone(true);
-      onComplete();
+      onCompleteRef.current();
       return;
     }
 
@@ -21,9 +34,12 @@ export const CinematicPreloader: React.FC<CinematicPreloaderProps> = ({ onComple
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       sessionStorage.setItem('nector_preloader_shown', 'true');
       setIsDone(true);
-      onComplete();
+      onCompleteRef.current();
       return;
     }
+
+    let timer1: ReturnType<typeof setTimeout> | null = null;
+    let timer2: ReturnType<typeof setTimeout> | null = null;
 
     // Smooth simulated loading progression
     let currentProgress = 0;
@@ -40,11 +56,11 @@ export const CinematicPreloader: React.FC<CinematicPreloaderProps> = ({ onComple
         sessionStorage.setItem('nector_preloader_shown', 'true');
 
         // Short pause at 100% for impact, then start curtain wipe
-        setTimeout(() => {
+        timer1 = setTimeout(() => {
           setIsFading(true);
-          setTimeout(() => {
+          timer2 = setTimeout(() => {
             setIsDone(true);
-            onComplete();
+            onCompleteRef.current();
           }, 850);
         }, 350);
       } else {
@@ -52,8 +68,12 @@ export const CinematicPreloader: React.FC<CinematicPreloaderProps> = ({ onComple
       }
     }, 45);
 
-    return () => clearInterval(interval);
-  }, [onComplete]);
+    return () => {
+      clearInterval(interval);
+      if (timer1) clearTimeout(timer1);
+      if (timer2) clearTimeout(timer2);
+    };
+  }, []);
 
   if (isDone) return null;
 
