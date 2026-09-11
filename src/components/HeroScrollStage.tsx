@@ -189,6 +189,31 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
           }}
         />
 
+        {/* Sparse Floating Sunlit Dust Bokeh (Sun-Dried Orchard Warmth) */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {[
+            { top: '22%', left: '28%', size: 4, delay: '0s', dur: '9s' },
+            { top: '34%', left: '68%', size: 6, delay: '2s', dur: '12s' },
+            { top: '56%', left: '24%', size: 5, delay: '1s', dur: '10s' },
+            { top: '64%', left: '74%', size: 3, delay: '3.5s', dur: '13s' },
+            { top: '18%', left: '52%', size: 5, delay: '4s', dur: '11s' },
+            { top: '76%', left: '44%', size: 4, delay: '2.5s', dur: '8.5s' },
+          ].map((b, idx) => (
+            <div
+              key={idx}
+              style={{
+                top: b.top,
+                left: b.left,
+                width: `${b.size}px`,
+                height: `${b.size}px`,
+                animation: prefersReducedMotion ? 'none' : `bokeh-drift ${b.dur} ease-in-out infinite alternate`,
+                animationDelay: b.delay,
+              }}
+              className="absolute rounded-full bg-[#ffaa33] opacity-35 blur-[1px] shadow-[0_0_8px_rgba(255,170,51,0.6)]"
+            />
+          ))}
+        </div>
+
         {/* Centerpiece REAL-TIME 3D WebGL Jar with Packed Fruit Gummies */}
         <div
           className={`absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${

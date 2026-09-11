@@ -24,6 +24,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0b0704] text-[#f4ede4] relative selection:bg-[#ff8a1e] selection:text-[#0b0704]">
       
+      {/* Subtle Gourmet Filmic Grain Texture Overlay */}
+      <div className="filmic-grain" aria-hidden="true" />
+
       {/* Luxury Gold Inertia Cursor (Desktop Only) */}
       <CustomCursor />
 

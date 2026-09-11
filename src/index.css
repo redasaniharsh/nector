@@ -179,3 +179,48 @@
     display: none !important;
   }
 }
+
+/* Subtle gourmet animated film grain */
+.filmic-grain {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.038;
+  pointer-events: none;
+  z-index: 45;
+  animation: grain-shift 8s steps(10) infinite;
+}
+
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  30% { transform: translate(3%, -1%); }
+  50% { transform: translate(-1%, 2%); }
+  70% { transform: translate(2%, -2%); }
+  90% { transform: translate(-2%, 1%); }
+}
+
+/* Soft floating dust-in-sunlight bokeh */
+@keyframes bokeh-drift {
+  0% { transform: translate(0, 0) scale(0.9); opacity: 0.2; }
+  50% { opacity: 0.5; }
+  100% { transform: translate(16px, -24px) scale(1.2); opacity: 0.25; }
+}
+
+/* Soft gradient mask section transitions */
+.section-fade-edges {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filmic-grain {
+    animation: none !important;
+    opacity: 0.02;
+  }
+}
