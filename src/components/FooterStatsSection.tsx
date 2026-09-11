@@ -16,7 +16,7 @@ export const FooterStatsSection: React.FC = () => {
           <span className="font-tech text-xs text-[#ff8a1e] tracking-[0.25em] uppercase">
             Pure Botanical Formulation
           </span>
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#f4ede4]">
+          <h2 className="font-display fluid-section-headline font-black tracking-tight text-[#f4ede4]">
             Refreshing Purity
           </h2>
           <p className="font-body text-[#9c8f80] text-sm md:text-base leading-relaxed">
@@ -38,7 +38,7 @@ export const FooterStatsSection: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-[#1e150f] text-center">
           {FOOTER_STATS.map((stat) => (
             <div key={stat.id} className="flex flex-col items-center space-y-1 group">
-              <span className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#ff8a1e] group-hover:scale-105 transition-transform duration-300">
+              <span className="font-display fluid-stat-num font-black tracking-tight text-[#ff8a1e] group-hover:scale-105 transition-transform duration-300">
                 {stat.value}
               </span>
               <span className="font-tech text-xs sm:text-sm font-semibold tracking-widest text-[#f4ede4] uppercase">

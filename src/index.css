@@ -17,6 +17,12 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
+  /* Accessible focus indicators */
+  :focus-visible {
+    outline: 2px solid #ff8a1e;
+    outline-offset: 2px;
+  }
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
@@ -31,6 +37,22 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #ff8a1e;
   }
+}
+
+/* Fluid typography utilities using modern CSS clamp() */
+.fluid-hero-headline {
+  font-size: clamp(2.5rem, 5vw + 0.5rem, 4.25rem);
+  line-height: 1.06;
+}
+
+.fluid-section-headline {
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.5rem);
+  line-height: 1.08;
+}
+
+.fluid-stat-num {
+  font-size: clamp(2.25rem, 4vw + 0.75rem, 3.75rem);
+  line-height: 1;
 }
 
 .font-display {

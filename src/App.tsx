@@ -46,9 +46,11 @@ export default function App() {
       {/* Persistent Floating "BUY NOW" Pill (Matching Reference Video Bottom-Right Layout) */}
       <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40">
         <button
+          type="button"
           id="btn-floating-buy-now"
           onClick={() => setIsCartOpen(true)}
-          className="group flex items-center space-x-2.5 px-5 py-3 rounded-full bg-[#140e0a]/90 hover:bg-[#1f150f] border border-[#ff8a1e] text-[#f4ede4] font-display font-bold text-xs md:text-sm tracking-wider uppercase backdrop-blur-md shadow-[0_0_30px_rgba(255,138,30,0.35)] hover:shadow-[0_0_40px_rgba(255,138,30,0.6)] transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+          aria-label="Open cart and buy now"
+          className="group flex items-center space-x-2.5 px-5 py-3 rounded-full bg-[#140e0a]/90 hover:bg-[#1f150f] border border-[#ff8a1e] text-[#f4ede4] font-display font-bold text-xs md:text-sm tracking-wider uppercase backdrop-blur-md shadow-[0_0_30px_rgba(255,138,30,0.35)] hover:shadow-[0_0_40px_rgba(255,138,30,0.6)] transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
         >
           <div className="w-6 h-6 rounded-full bg-[#ff8a1e] text-[#0b0704] flex items-center justify-center group-hover:rotate-12 transition-transform">
             <ShoppingBag className="w-3.5 h-3.5" />

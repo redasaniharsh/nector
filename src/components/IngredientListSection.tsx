@@ -56,7 +56,7 @@ export const IngredientListSection: React.FC = () => {
               <span className="font-tech text-xs text-[#ff8a1e] tracking-[0.2em] uppercase">
                 Confectionery Elevated To High Art
               </span>
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#f4ede4] leading-[1.08]">
+              <h2 className="font-display fluid-section-headline font-black tracking-tight text-[#f4ede4]">
                 Earth's Purest Fruit Confection
               </h2>
               <p className="font-body text-[#9c8f80] text-base md:text-lg leading-relaxed max-w-lg">

@@ -372,7 +372,7 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) 
           {/* Headline */}
           <h1
             style={{ opacity: headlineOpacity, transform: `translateY(${headlineY}px)` }}
-            className="font-display text-5xl lg:text-6xl font-black tracking-tight text-[#f4ede4] leading-[1.06] mb-4 will-change-transform"
+            className="font-display fluid-hero-headline font-black tracking-tight text-[#f4ede4] mb-4 will-change-transform"
           >
             Pure Fruit Nectar<br />
             <span className="text-[#ff8a1e]">From Sunlit<br />Orchards</span>
@@ -390,8 +390,10 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) 
             className="flex items-center space-x-4 will-change-transform"
           >
             <button
+              type="button"
               onClick={onOpenCart}
-              className="inline-flex items-center space-x-2.5 px-6 py-3 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(255,138,30,0.35)] cursor-pointer"
+              aria-label="Experience Nectar - open cart"
+              className="inline-flex items-center space-x-2.5 px-6 py-3 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(255,138,30,0.35)] cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
             >
               <span>EXPERIENCE NECTAR</span>
               <ChevronRight className="w-4 h-4" />
@@ -428,7 +430,9 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) 
 
         {/* Bottom Right Floating Quick Action (Revealed smoothly along with hero) */}
         <button
+          type="button"
           onClick={onOpenCart}
+          aria-label="Quick buy now - open cart"
           style={{
             opacity: buyNowOpacity,
             transform: `translateY(${buyNowY}px)`,

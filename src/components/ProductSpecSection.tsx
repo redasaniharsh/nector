@@ -22,7 +22,7 @@ export const ProductSpecSection: React.FC = () => {
             </div>
 
             {/* Heavy Display Headline */}
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#f4ede4] leading-[1.08]">
+            <h2 className="font-display fluid-section-headline font-black tracking-tight text-[#f4ede4]">
               {PRODUCT_SPEC.headline}
             </h2>
 
