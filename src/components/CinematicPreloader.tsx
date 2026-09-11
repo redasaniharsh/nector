@@ -58,6 +58,7 @@ export const CinematicPreloader: React.FC<CinematicPreloaderProps> = ({ onComple
         // Short pause at 100% for impact, then start curtain wipe
         timer1 = setTimeout(() => {
           setIsFading(true);
+          onCompleteRef.current(); // Signal jar settle-in under dissolving curtain
           timer2 = setTimeout(() => {
             setIsDone(true);
             onCompleteRef.current();

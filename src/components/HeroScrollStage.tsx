@@ -49,11 +49,11 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
     }
   }, [isReady]);
 
-  // Hard fallback: after 2.0 seconds, force the 3D jar to be visible under all circumstances
+  // Hard fallback: after 2.5 seconds, force the 3D jar to be visible under all circumstances
   useEffect(() => {
     const fallbackTimer = setTimeout(() => {
       setInternalReady(true);
-    }, 2000);
+    }, 2500);
     return () => clearTimeout(fallbackTimer);
   }, []);
 
