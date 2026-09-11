@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, lazy, Suspense } from 'react';
 import { ShoppingBag, ChevronRight } from 'lucide-react';
+import { MagneticButton } from './MagneticButton';
 
 const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'));
 
@@ -395,15 +396,22 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
             style={{ opacity: ctaOpacity, transform: `translateY(${ctaY}px)` }}
             className="flex items-center space-x-4 will-change-transform"
           >
-            <button
+            <MagneticButton
               type="button"
               onClick={onOpenCart}
               aria-label="Experience Nectar - open cart"
-              className="inline-flex items-center space-x-2.5 px-6 py-3 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(255,138,30,0.35)] cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
+              className="group inline-flex items-center space-x-2.5 px-6 py-3 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(255,138,30,0.35)] cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
             >
-              <span>EXPERIENCE NECTAR</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+              <span className="relative inline-block overflow-hidden h-[1.25em] leading-[1.25em]">
+                <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                  EXPERIENCE NECTAR
+                </span>
+                <span className="absolute left-0 top-full inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                  EXPERIENCE NECTAR
+                </span>
+              </span>
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </MagneticButton>
           </div>
         </div>
 

@@ -70,6 +70,7 @@ export const IngredientListSection: React.FC = () => {
                 return (
                   <div
                     key={item.id}
+                    data-cursor="view"
                     onMouseEnter={() => setActiveGlow(theme.glow)}
                     onMouseLeave={() => setActiveGlow(DEFAULT_GLOW)}
                     className="group relative flex flex-col p-5 md:p-6 rounded-2xl bg-[#140e0a] border border-[#261c14] transition-all duration-300 transform hover:scale-[1.025] hover:contrast-[1.04] hover:saturate-[1.08] cursor-pointer"

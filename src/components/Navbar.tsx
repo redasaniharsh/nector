@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Sparkles, Sliders } from 'lucide-react';
 import { BRAND_NAME, BRAND_VERSION } from '../data/productData';
+import { MagneticButton } from './MagneticButton';
 
 interface NavbarProps {
   onOpenCart: () => void;
@@ -95,16 +96,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCart, onOpenExporter }) =>
           </button>
 
           {/* Shop CTA button */}
-          <button
+          <MagneticButton
             type="button"
             id="btn-nav-shop-now"
             onClick={onOpenCart}
             aria-label="Open cart and buy now"
-            className="relative group inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-semibold text-xs tracking-wider uppercase transition-all duration-300 transform active:scale-95 shadow-[0_0_20px_rgba(255,138,30,0.3)] hover:shadow-[0_0_30px_rgba(255,138,30,0.5)] cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
+            className="group inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-[#ff8a1e] hover:bg-[#ff9c3a] text-[#0b0704] font-semibold text-xs tracking-wider uppercase shadow-[0_0_20px_rgba(255,138,30,0.3)] hover:shadow-[0_0_30px_rgba(255,138,30,0.5)] cursor-pointer focus-visible:ring-2 focus-visible:ring-white"
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Shop Now</span>
-          </button>
+            <span className="relative inline-block overflow-hidden h-[1.25em] leading-[1.25em]">
+              <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                Shop Now
+              </span>
+              <span className="absolute left-0 top-full inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                Shop Now
+              </span>
+            </span>
+          </MagneticButton>
         </div>
       </div>
     </header>

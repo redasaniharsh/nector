@@ -97,7 +97,7 @@ export const ProductSpecSection: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-tr from-[#ff8a1e]/15 to-teal-500/10 rounded-full blur-3xl" />
 
             {/* Rotated / Angled Product Image */}
-            <div className="relative z-10 group transition-transform duration-700 hover:scale-105">
+            <div data-cursor="view" className="relative z-10 group transition-transform duration-700 hover:scale-105 cursor-pointer">
               <img
                 src={ASSETS.jarSpec}
                 alt="NÉCTAR 450G Apothecary Specimen"
