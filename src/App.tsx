@@ -8,15 +8,20 @@ import { CircularRingSection } from './components/CircularRingSection';
 import { FooterStatsSection } from './components/FooterStatsSection';
 import { CartDrawer } from './components/CartDrawer';
 import { ExportFramesModal } from './components/ExportFramesModal';
+import { CinematicPreloader } from './components/CinematicPreloader';
 import { ShoppingBag } from 'lucide-react';
 
 export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isExporterOpen, setIsExporterOpen] = useState(false);
+  const [isPreloaded, setIsPreloaded] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#0b0704] text-[#f4ede4] relative selection:bg-[#ff8a1e] selection:text-[#0b0704]">
       
+      {/* 0. Cinematic Luxury Preloader ("From the Orchard") */}
+      <CinematicPreloader onComplete={() => setIsPreloaded(true)} />
+
       {/* 1. Fixed Sticky Top Navigation */}
       <Navbar
         onOpenCart={() => setIsCartOpen(true)}
@@ -25,7 +30,7 @@ export default function App() {
 
       {/* 2. Pinned Hero Scroll-Animation (The Centerpiece) */}
       <main>
-        <HeroScrollStage onOpenCart={() => setIsCartOpen(true)} />
+        <HeroScrollStage onOpenCart={() => setIsCartOpen(true)} isReady={isPreloaded} />
 
         {/* 3. Product Spec Section */}
         <ProductSpecSection />

@@ -5,6 +5,7 @@ const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'));
 
 interface HeroScrollStageProps {
   onOpenCart?: () => void;
+  isReady?: boolean;
 }
 
 /**
@@ -32,7 +33,7 @@ function getScrollWindow(
   return { opacity: 0, translateY: -16 };
 }
 
-export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) => {
+export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, isReady = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -187,7 +188,11 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) 
         />
 
         {/* Centerpiece REAL-TIME 3D WebGL Jar with Packed Fruit Gummies */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10">
+        <div
+          className={`absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isReady ? 'scale-100 opacity-100 drop-shadow-[0_20px_45px_rgba(255,138,30,0.22)]' : 'scale-90 opacity-0'
+          }`}
+        >
           <Suspense
             fallback={
               <div className="flex flex-col items-center justify-center space-y-4 animate-pulse">
