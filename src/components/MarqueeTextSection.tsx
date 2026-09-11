@@ -4,15 +4,39 @@ import { BRAND_NAME } from '../data/productData';
 
 export const MarqueeTextSection: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [velocity, setVelocity] = useState(0);
+  const lastScrollY = React.useRef(0);
+  const lastTime = React.useRef(typeof performance !== 'undefined' ? performance.now() : 0);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    let timeoutId: number;
+    const handleScroll = () => {
+      const now = performance.now();
+      const currentScrollY = window.scrollY;
+      const deltaY = currentScrollY - lastScrollY.current;
+      const deltaT = Math.max(1, now - lastTime.current);
+      const currentVelocity = deltaY / deltaT;
+
+      setVelocity(Math.max(-3, Math.min(3, currentVelocity)));
+      setScrollY(currentScrollY);
+
+      lastScrollY.current = currentScrollY;
+      lastTime.current = now;
+
+      clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        setVelocity(0);
+      }, 180);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Compute slight rotation for center product based on scroll
   const rotationAngle = (scrollY * 0.08) % 360;
+  const dynamicDurationLeft = `${Math.max(10, 26 / (1 + Math.abs(velocity) * 0.85))}s`;
+  const dynamicDurationRight = `${Math.max(12, 30 / (1 + Math.abs(velocity) * 0.85))}s`;
 
   return (
     <section className="relative py-28 md:py-36 bg-[#0b0704] text-[#f4ede4] overflow-hidden border-t border-[#1f1711]">
@@ -20,8 +44,11 @@ export const MarqueeTextSection: React.FC = () => {
       {/* Background Tiled Marquee Layers (Full-Bleed Environmental Typography Texture) */}
       <div className="absolute inset-0 flex flex-col justify-center space-y-6 md:space-y-8 select-none pointer-events-none opacity-20 overflow-hidden">
         
-        {/* Row 1: Leftward Marquee */}
-        <div className="animate-marquee-left whitespace-nowrap flex space-x-12">
+        {/* Row 1: Leftward Marquee (Velocity Reactive) */}
+        <div
+          className="animate-marquee-left whitespace-nowrap flex space-x-12 will-change-transform"
+          style={{ animationDuration: dynamicDurationLeft }}
+        >
           {Array.from({ length: 8 }).map((_, idx) => (
             <span
               key={`row1-${idx}`}
@@ -31,19 +58,22 @@ export const MarqueeTextSection: React.FC = () => {
                 color: 'transparent'
               }}
             >
-              {BRAND_NAME} • FRUIT BURST • PURE NECTAR •
+              SUN-DRIED • HAND-SORTED • NO PRESERVATIVES • 100% NATURAL •
             </span>
           ))}
         </div>
 
-        {/* Row 2: Rightward Marquee (Filled High Energy) */}
-        <div className="animate-marquee-right whitespace-nowrap flex space-x-12">
+        {/* Row 2: Rightward Marquee (Filled High Energy - Velocity Reactive) */}
+        <div
+          className="animate-marquee-right whitespace-nowrap flex space-x-12 will-change-transform"
+          style={{ animationDuration: dynamicDurationRight }}
+        >
           {Array.from({ length: 8 }).map((_, idx) => (
             <span
               key={`row2-${idx}`}
               className="font-display text-6xl sm:text-8xl md:text-9xl font-black uppercase tracking-tighter text-[#3a2c20]/60"
             >
-              SUNLIT ORCHARDS • 100% BOTANICAL • ZERO SUGAR •
+              {BRAND_NAME} • ARTISANAL ORCHARDS • ZERO SYNTHETIC DYES •
             </span>
           ))}
         </div>

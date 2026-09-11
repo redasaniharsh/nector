@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroScrollStage } from './components/HeroScrollStage';
 import { ProductSpecSection } from './components/ProductSpecSection';
+import { FarmToJarStrip } from './components/FarmToJarStrip';
 import { IngredientListSection } from './components/IngredientListSection';
 import { MarqueeTextSection } from './components/MarqueeTextSection';
 import { CircularRingSection } from './components/CircularRingSection';
@@ -42,7 +43,10 @@ export default function App() {
         {/* 3. Product Spec Section */}
         <ProductSpecSection />
 
-        {/* 4. Ingredient / Feature List Section */}
+        {/* 4. Farm to Jar 4-Stage Provenance Journey */}
+        <FarmToJarStrip />
+
+        {/* 5. Ingredient / Feature List Section */}
         <IngredientListSection />
 
         {/* 5. Tiled Marquee Background Text Section */}
