@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #0b0704;
+    --accent-primary: #ff8a1e;
+    --text-primary: #f4ede4;
+    --text-muted: #9c8f80;
+    --glow-amber: rgba(255, 138, 30, 0.28);
+    --glow-teal: rgba(45, 212, 191, 0.22);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #0b0704;
+    color: #f4ede4;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0704;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a221b;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff8a1e;
+  }
+}
+
+.font-display {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Vertical writing mode for side technical metadata labels */
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.writing-vertical-lr {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+/* Atmospheric glow classes */
+.bg-radial-hero {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 138, 30, 0.18) 0%, rgba(11, 7, 4, 0) 70%);
+}
+
+.bg-radial-pedestal {
+  background: radial-gradient(ellipse at 50% 85%, rgba(45, 212, 191, 0.18) 0%, rgba(255, 138, 30, 0.12) 35%, rgba(11, 7, 4, 0) 75%);
+}
+
+/* Marquee infinite scroll keyframes */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 28s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}

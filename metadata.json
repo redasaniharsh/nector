@@ -1,0 +1,6 @@
+{
+  "name": "NÉCTAR // Luxury Fruit Confection",
+  "description": "Artisanal fruit-shaped gummy candies in a luxury glass apothecary jar, featuring a scroll-driven 3D product animation hero inspired by 2cal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
