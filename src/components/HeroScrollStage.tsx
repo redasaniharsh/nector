@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Hero3DCanvas } from './Hero3DCanvas';
+import React, { useRef, useEffect, useState, lazy, Suspense } from 'react';
 import { ShoppingBag, ChevronRight } from 'lucide-react';
+
+const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'));
 
 interface HeroScrollStageProps {
   onOpenCart?: () => void;
@@ -187,10 +188,21 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart }) 
 
         {/* Centerpiece REAL-TIME 3D WebGL Jar with Packed Fruit Gummies */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10">
-          <Hero3DCanvas
-            progress={progress}
-            prefersReducedMotion={prefersReducedMotion}
-          />
+          <Suspense
+            fallback={
+              <div className="flex flex-col items-center justify-center space-y-4 animate-pulse">
+                <div className="w-14 h-14 rounded-full border-2 border-[#ff8a1e]/20 border-t-[#ff8a1e] animate-spin" />
+                <span className="font-tech text-xs tracking-[0.25em] text-[#ff8a1e]/80 uppercase">
+                  CRAFTING CONFECTION...
+                </span>
+              </div>
+            }
+          >
+            <Hero3DCanvas
+              progress={progress}
+              prefersReducedMotion={prefersReducedMotion}
+            />
+          </Suspense>
         </div>
 
         {/* =========================================================================

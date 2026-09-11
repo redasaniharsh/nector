@@ -240,7 +240,7 @@ function createJarLatheGeometry(): THREE.BufferGeometry {
   points.push(new THREE.Vector2(0.68, -0.88));
   points.push(new THREE.Vector2(0.0, -0.88)); // Solid interior base
 
-  const geometry = new THREE.LatheGeometry(points, 72);
+  const geometry = new THREE.LatheGeometry(points, 48);
   geometry.computeVertexNormals();
   return geometry;
 }
@@ -262,7 +262,7 @@ function createLidGeometry(): THREE.BufferGeometry {
   points.push(new THREE.Vector2(0.75, 1.42)); // Underside
   points.push(new THREE.Vector2(0.0, 1.42));
 
-  const geometry = new THREE.LatheGeometry(points, 64);
+  const geometry = new THREE.LatheGeometry(points, 48);
   geometry.computeVertexNormals();
   return geometry;
 }
@@ -629,7 +629,7 @@ export function createProductModel(isMobile: boolean = false): ProductModelBundl
   rootGroup.add(pedestalGroup);
 
   // Top beveled chrome disc
-  const topPlateGeom = new THREE.CylinderGeometry(1.16, 1.22, 0.05, 64);
+  const topPlateGeom = new THREE.CylinderGeometry(1.16, 1.22, 0.05, 40);
   const chromeMaterial = new THREE.MeshStandardMaterial({
     color: new THREE.Color(0xf2f4f8), // Bright polished chrome
     metalness: 0.98,
@@ -640,13 +640,13 @@ export function createProductModel(isMobile: boolean = false): ProductModelBundl
   pedestalGroup.add(pedestalChromeMesh);
 
   // Lower stepped chrome plinth
-  const basePlinthGeom = new THREE.CylinderGeometry(1.24, 1.28, 0.05, 64);
+  const basePlinthGeom = new THREE.CylinderGeometry(1.24, 1.28, 0.05, 40);
   const lowerChromeMesh = new THREE.Mesh(basePlinthGeom, chromeMaterial);
   lowerChromeMesh.position.y = -0.075;
   pedestalGroup.add(lowerChromeMesh);
 
   // Embedded circular warm orange glowing ring directly at the jar-chrome seam
-  const orangeRingGeom = new THREE.TorusGeometry(1.04, 0.025, 16, 64);
+  const orangeRingGeom = new THREE.TorusGeometry(1.04, 0.025, 12, 40);
   const orangeRingMat = new THREE.MeshBasicMaterial({
     color: new THREE.Color(0xff6600),
     transparent: true,

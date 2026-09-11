@@ -30,7 +30,7 @@ export interface CandyPrototype {
  * spine ridge along outer curve, rounded base, and tapered beak.
  */
 function createMangoGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.17, 36, 26);
+  const geom = new THREE.SphereGeometry(0.17, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -66,7 +66,7 @@ function createMangoGeometry(): THREE.BufferGeometry {
  * top stem bowl depression, and rounded base.
  */
 function createPeachGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.17, 36, 26);
+  const geom = new THREE.SphereGeometry(0.17, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -111,7 +111,7 @@ function createPeachGeometry(): THREE.BufferGeometry {
  * and subtle spiral seed dimples that sparkle under specular light.
  */
 function createStrawberryGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.17, 36, 26);
+  const geom = new THREE.SphereGeometry(0.17, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -150,7 +150,7 @@ function createStrawberryGeometry(): THREE.BufferGeometry {
  * drupelet clusters (pearls) over a rounded dome.
  */
 function createRaspberryGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.165, 40, 28);
+  const geom = new THREE.SphereGeometry(0.165, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -195,7 +195,7 @@ function createRaspberryGeometry(): THREE.BufferGeometry {
  * two convergent flat sides, filleted outer corners, and subtle segment lines.
  */
 function createCitrusGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.CylinderGeometry(0.18, 0.18, 0.10, 32, 4, false, -Math.PI * 0.35, Math.PI * 0.70);
+  const geom = new THREE.CylinderGeometry(0.18, 0.18, 0.10, 24, 2, false, -Math.PI * 0.35, Math.PI * 0.70);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -233,7 +233,7 @@ function createCitrusGeometry(): THREE.BufferGeometry {
  * broader rounded shoulders, and subtle five-fold bottom lobes.
  */
 function createGreenAppleGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.165, 36, 26);
+  const geom = new THREE.SphereGeometry(0.165, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -285,7 +285,7 @@ function createGreenAppleGeometry(): THREE.BufferGeometry {
  * catching deep royal violet specular glints.
  */
 function createPurpleBerryGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.165, 36, 26);
+  const geom = new THREE.SphereGeometry(0.165, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {
@@ -320,7 +320,7 @@ function createPurpleBerryGeometry(): THREE.BufferGeometry {
  * catching bright golden nectar glints.
  */
 function createMixedFruitGeometry(): THREE.BufferGeometry {
-  const geom = new THREE.SphereGeometry(0.165, 36, 26);
+  const geom = new THREE.SphereGeometry(0.165, 24, 18);
   const pos = geom.attributes.position;
 
   for (let i = 0; i < pos.count; i++) {

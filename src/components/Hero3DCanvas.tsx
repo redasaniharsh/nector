@@ -129,6 +129,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [hasWebGLError, setHasWebGLError] = React.useState(false);
 
   // Scene instances refs
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -159,6 +160,18 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
+    // Check WebGL availability
+    try {
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (!gl) {
+        setHasWebGLError(true);
+        return;
+      }
+    } catch {
+      setHasWebGLError(true);
+      return;
+    }
+
     const isMobile = window.innerWidth < 768;
 
     // 1. Scene setup with clean, solid dark gradient background (black to warm brown)
@@ -173,12 +186,19 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
     cameraRef.current = camera;
 
     // 3. WebGL Renderer with solid opaque output
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: false, // Solid opaque background — zero DOM text bleed
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: false, // Solid opaque background — zero DOM text bleed
+        antialias: true,
+        powerPreference: 'high-performance',
+      });
+    } catch {
+      setHasWebGLError(true);
+      return;
+    }
+
     renderer.setClearColor(0x030201, 1.0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.30;
@@ -210,7 +230,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
       const width = container.clientWidth || window.innerWidth;
       const height = container.clientHeight || window.innerHeight;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2.0);
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.75);
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
@@ -285,11 +305,43 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
         cancelAnimationFrame(rafRef.current);
       }
       resizeObserver.disconnect();
+
+      // Recursive disposal of 3D geometries and materials
+      if (modelBundleRef.current?.rootGroup) {
+        modelBundleRef.current.rootGroup.traverse((child) => {
+          if ((child as THREE.Mesh).isMesh) {
+            const mesh = child as THREE.Mesh;
+            mesh.geometry?.dispose();
+            if (Array.isArray(mesh.material)) {
+              mesh.material.forEach((m) => m.dispose());
+            } else {
+              mesh.material?.dispose();
+            }
+          }
+        });
+      }
+
       studioBgTexture.dispose();
       envMap.dispose();
       renderer.dispose();
     };
   }, [prefersReducedMotion]);
+
+  if (hasWebGLError) {
+    return (
+      <div
+        ref={containerRef}
+        className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center"
+      >
+        <div className="w-24 h-24 rounded-full border border-[#ff8a1e]/40 bg-[#160e08] flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(255,138,30,0.2)]">
+          <span className="font-display text-xl font-bold text-[#ff8a1e]">NÉCTAR</span>
+        </div>
+        <p className="font-tech text-xs tracking-widest text-[#9c8f80] uppercase">
+          3D Hardware Acceleration Unavailable
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -304,3 +356,5 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
     </div>
   );
 };
+
+export default Hero3DCanvas;
