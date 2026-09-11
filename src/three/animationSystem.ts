@@ -39,10 +39,13 @@ export function fitProductToViewport(
   let productWidth = 2.45;
 
   if (model) {
-    const bbox = new THREE.Box3().setFromObject(model.rootGroup);
+    const bbox = new THREE.Box3();
+    if (model.glassMesh) bbox.expandByObject(model.glassMesh);
+    if (model.lidMesh) bbox.expandByObject(model.lidMesh);
+    if (model.pedestalChromeMesh) bbox.expandByObject(model.pedestalChromeMesh);
     const size = new THREE.Vector3();
     bbox.getSize(size);
-    if (size.y > 1.0) {
+    if (size.y > 1.0 && size.y < 8.0) {
       productHeight = size.y;
       productWidth = size.x;
     }
@@ -364,10 +367,15 @@ export function updateProductAnimation(
 
       if (p < pStart) {
         mesh.visible = false;
-        mesh.position.set(0, -999, 0);
+        mesh.position.set(0, 0, 0);
       } else {
-        mesh.visible = true;
         const norm = Math.min(1.0, (p - pStart) / pDuration);
+
+        if (norm >= 1.0) {
+          mesh.visible = false;
+          mesh.position.set(0, 0, 0);
+        } else {
+          mesh.visible = true;
         
         // Physics-like gravity curve: accelerating downward
         const fallDist = Math.pow(norm, 1.8) * 5.2;
@@ -392,6 +400,7 @@ export function updateProductAnimation(
         // Gentle exit fade/scale past bottom
         const exitScale = norm > 0.80 ? Math.max(0, 1.0 - (norm - 0.80) / 0.20) : 1.0;
         mesh.scale.setScalar(0.95 * exitScale);
+        }
       }
     });
   }

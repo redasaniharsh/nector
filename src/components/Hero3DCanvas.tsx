@@ -160,9 +160,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    // Check WebGL availability
+    // Check WebGL availability using offscreen canvas to avoid polluting actual canvas context
     try {
-      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      const testCanvas = document.createElement('canvas');
+      const gl = testCanvas.getContext('webgl2') || testCanvas.getContext('webgl');
       if (!gl) {
         setHasWebGLError(true);
         return;
