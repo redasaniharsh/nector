@@ -9,9 +9,11 @@ import { FooterStatsSection } from './components/FooterStatsSection';
 import { CartDrawer } from './components/CartDrawer';
 import { ExportFramesModal } from './components/ExportFramesModal';
 import { CinematicPreloader } from './components/CinematicPreloader';
+import { useLenis } from './lib/useLenis';
 import { ShoppingBag } from 'lucide-react';
 
 export default function App() {
+  useLenis();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isExporterOpen, setIsExporterOpen] = useState(false);
   const [isPreloaded, setIsPreloaded] = useState(false);

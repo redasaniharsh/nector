@@ -332,6 +332,70 @@ export function updateProductAnimation(
   model.jarGroup.rotation.y = jarRotationY;
   model.jarGroup.rotation.x = jarTiltX;
 
+  // =========================================================================
+  // SIGNATURE MOMENT: JAR LID LIFT & TUMBLING FRUIT PIECES ON SCROLL
+  // Reusable 3D pieces tumble out and fall with soft physics-like easing
+  // Reverses gracefully on scroll-up
+  // =========================================================================
+  let lidLiftY = 0;
+  let lidTiltZ = 0;
+  let lidTiltX = 0;
+
+  if (p > 0.08 && p <= 0.85) {
+    const tLid = Math.min(1.0, (p - 0.08) / 0.38);
+    const easeLid = tLid * tLid * (3 - 2 * tLid);
+    lidLiftY = easeLid * 0.95;
+    lidTiltZ = Math.sin(easeLid * Math.PI) * 0.22;
+    lidTiltX = Math.sin(easeLid * Math.PI) * 0.12;
+  } else if (p > 0.85) {
+    const settle = (p - 0.85) / 0.15;
+    lidLiftY = Math.max(0, 0.95 - settle * 0.95);
+  }
+
+  model.lidMesh.position.y = lidLiftY;
+  model.lidMesh.rotation.z = lidTiltZ;
+  model.lidMesh.rotation.x = lidTiltX;
+
+  // Tumbling pieces choreography (reusing existing fruit prototypes)
+  if (model.tumblingCandies && model.tumblingCandies.length > 0) {
+    model.tumblingCandies.forEach((mesh, i) => {
+      const pStart = 0.14 + i * 0.055;
+      const pDuration = 0.50;
+
+      if (p < pStart) {
+        mesh.visible = false;
+        mesh.position.set(0, -999, 0);
+      } else {
+        mesh.visible = true;
+        const norm = Math.min(1.0, (p - pStart) / pDuration);
+        
+        // Physics-like gravity curve: accelerating downward
+        const fallDist = Math.pow(norm, 1.8) * 5.2;
+
+        // Individual parabolic trajectories & spread
+        const angle = (i / 7) * Math.PI * 2 + 0.45;
+        const spreadFactor = Math.sin(norm * Math.PI * 0.85);
+        const posX = Math.cos(angle) * (1.1 + i * 0.18) * spreadFactor;
+        const posZ = Math.sin(angle) * (0.85 + i * 0.15) * spreadFactor;
+        
+        // Starts near top opening (y = 1.35) then arches slightly upward before tumbling down
+        const arcY = Math.sin(Math.min(1.0, norm * 2.5) * Math.PI) * 0.42;
+        const posY = 1.35 + arcY - fallDist;
+
+        mesh.position.set(posX, posY, posZ);
+
+        // Multi-axis organic tumbling rotations
+        mesh.rotation.x = norm * (5.5 + i * 1.2);
+        mesh.rotation.y = norm * (4.2 + i * 0.9);
+        mesh.rotation.z = norm * (3.8 + i * 1.4);
+
+        // Gentle exit fade/scale past bottom
+        const exitScale = norm > 0.80 ? Math.max(0, 1.0 - (norm - 0.80) / 0.20) : 1.0;
+        mesh.scale.setScalar(0.95 * exitScale);
+      }
+    });
+  }
+
   // Position rootGroup at designated horizontal offset
   model.rootGroup.position.x = offsetX;
 

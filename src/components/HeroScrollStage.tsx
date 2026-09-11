@@ -181,9 +181,10 @@ export const HeroScrollStage: React.FC<HeroScrollStageProps> = ({ onOpenCart, is
         
         {/* Subtle, Warm Center Studio Glow */}
         <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 will-change-transform"
           style={{
-            background: `radial-gradient(circle at 50% 48%, rgba(255, 120, 25, ${glowAlpha}) 0%, rgba(35, 20, 12, 0.40) 40%, rgba(3, 2, 1, 0) 70%)`
+            background: `radial-gradient(circle at 50% 48%, rgba(255, 120, 25, ${glowAlpha}) 0%, rgba(35, 20, 12, 0.40) 40%, rgba(3, 2, 1, 0) 70%)`,
+            transform: prefersReducedMotion ? 'none' : `translateY(${progress * 60}px)`,
           }}
         />
 

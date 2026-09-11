@@ -11,6 +11,8 @@ export interface ProductModelBundle {
   lidMesh: THREE.Mesh;
   labelMesh: THREE.Mesh;
   candiesGroup: THREE.Group;
+  tumblingGroup: THREE.Group;
+  tumblingCandies: THREE.Mesh[];
   pedestalGroup: THREE.Group;
   pedestalChromeMesh: THREE.Mesh;
   pedestalOrangeRing: THREE.Mesh;
@@ -678,6 +680,28 @@ export function createProductModel(isMobile: boolean = false): ProductModelBundl
   shadowPlane.position.y = -0.105;
   pedestalGroup.add(shadowPlane);
 
+  // =========================================================================
+  // 7. SIGNATURE TUMBLING CONFECTION PIECES (Reusing existing 3D fruit pieces)
+  // =========================================================================
+  const tumblingGroup = new THREE.Group();
+  tumblingGroup.name = 'tumbling-candies-group';
+  jarGroup.add(tumblingGroup);
+
+  const tumblingTypes: Array<keyof typeof prototypes> = [
+    'mango', 'peach', 'strawberry', 'citrus', 'raspberry', 'purpleBerry', 'greenApple'
+  ];
+
+  const tumblingCandies: THREE.Mesh[] = tumblingTypes.map((type, i) => {
+    const proto = prototypes[type];
+    const mesh = new THREE.Mesh(proto.geometry, proto.frontMaterial);
+    mesh.name = `tumbling-candies-${i}`;
+    mesh.scale.set(0.95, 0.95, 0.95);
+    mesh.visible = false;
+    mesh.renderOrder = 5;
+    tumblingGroup.add(mesh);
+    return mesh;
+  });
+
   return {
     rootGroup,
     jarGroup,
@@ -685,6 +709,8 @@ export function createProductModel(isMobile: boolean = false): ProductModelBundl
     lidMesh,
     labelMesh,
     candiesGroup,
+    tumblingGroup,
+    tumblingCandies,
     pedestalGroup,
     pedestalChromeMesh,
     pedestalOrangeRing,
