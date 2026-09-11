@@ -34,8 +34,29 @@ export const ProductSpecSection: React.FC = () => {
               {PRODUCT_SPEC.description}
             </p>
 
+            {/* Gourmet Trust Badges with One-Time Gold Shimmer Sweep */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
+              {[
+                { label: '100% Natural Harvest', icon: Sparkles },
+                { label: 'Lab Tested Purity', icon: ShieldCheck },
+                { label: 'No Added Sugar', icon: Droplets },
+                { label: 'Rich in Fiber & Protein', icon: Sparkles },
+              ].map((badge, idx) => (
+                <div
+                  key={idx}
+                  style={{ animationDelay: `${idx * 180}ms` }}
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full border border-[#ffaa33]/30 bg-[#160f09]/80 backdrop-blur-sm text-xs font-tech text-[#f4ede4] shadow-[0_2px_12px_rgba(255,170,51,0.08)] ${
+                    isInView ? 'gold-shimmer-badge' : ''
+                  }`}
+                >
+                  <badge.icon className="w-3 h-3 text-[#ffaa33]" />
+                  <span>{badge.label}</span>
+                </div>
+              ))}
+            </div>
+
             {/* Bullet Points with Clean Minimal Badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {PRODUCT_SPEC.bulletPoints.map((point, index) => (
                 <div
                   key={index}

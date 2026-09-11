@@ -140,3 +140,42 @@
     transition: none !important;
   }
 }
+
+/* Single-pass gold shimmer sweep animation for gourmet trust badges */
+@keyframes gold-shimmer-once {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-shimmer-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shimmer-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 215, 0, 0.40) 50%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  animation: gold-shimmer-once 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-shimmer-badge::after {
+    animation: none !important;
+    display: none !important;
+  }
+}

@@ -3,6 +3,46 @@ import { FOOTER_STATS, BRAND_NAME, BRAND_TAGLINE } from '../data/productData';
 import { ASSETS } from '../assets/images';
 import { useInView } from '../lib/useInView';
 
+const StatCounter: React.FC<{ valueStr: string; isActive: boolean }> = ({ valueStr, isActive }) => {
+  const [displayVal, setDisplayVal] = React.useState(valueStr === 'ZERO' ? 'ZERO' : '0');
+
+  React.useEffect(() => {
+    if (!isActive) return;
+
+    // Check if numeric or has suffix like "450G", "100%", "5"
+    const match = valueStr.match(/^(\d+)(.*)$/);
+    if (!match) {
+      setDisplayVal(valueStr);
+      return;
+    }
+
+    const targetNum = parseInt(match[1], 10);
+    const suffix = match[2] || '';
+
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const update = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(ease * targetNum);
+      setDisplayVal(`${current}${suffix}`);
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        setDisplayVal(`${targetNum}${suffix}`);
+      }
+    };
+
+    requestAnimationFrame(update);
+  }, [isActive, valueStr]);
+
+  return <span>{displayVal}</span>;
+};
+
 export const FooterStatsSection: React.FC = () => {
   const { ref, isInView } = useInView({ threshold: 0.15 });
 
@@ -40,11 +80,17 @@ export const FooterStatsSection: React.FC = () => {
         {/* 4 Large Numeric Stats Row */}
         <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-[#1e150f] text-center reveal-fade-up delay-150 ${isInView ? 'is-revealed' : ''}`}>
           {FOOTER_STATS.map((stat) => (
-            <div key={stat.id} className="flex flex-col items-center space-y-1 group">
+            <div key={stat.id} className="flex flex-col items-center space-y-1.5 group">
               <span className="font-display fluid-stat-num font-black tracking-tight text-[#ff8a1e] group-hover:scale-105 transition-transform duration-300">
-                {stat.value}
+                <StatCounter valueStr={stat.value} isActive={isInView} />
               </span>
-              <span className="font-tech text-xs sm:text-sm font-semibold tracking-widest text-[#f4ede4] uppercase">
+              {/* Gold foil drawing underline */}
+              <div
+                className={`h-[2px] bg-gradient-to-r from-transparent via-[#ffaa33] to-transparent transition-all duration-1000 ${
+                  isInView ? 'w-16 opacity-100' : 'w-0 opacity-0'
+                }`}
+              />
+              <span className="font-tech text-xs sm:text-sm font-semibold tracking-widest text-[#f4ede4] uppercase pt-1">
                 {stat.label}
               </span>
               <span className="font-body text-[11px] text-[#9c8f80] max-w-[180px] leading-snug">
